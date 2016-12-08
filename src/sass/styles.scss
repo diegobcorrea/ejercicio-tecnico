@@ -1,0 +1,28 @@
+/**
+ * Created by Gian Carlo on 30/05/2016.
+ */
+ 
+//Base SCSS file
+
+//Base
+@import "base/variables";
+@import "base/normalize";
+@import "base/site";
+@import "base/text";
+@import "base/animations";
+
+//Layout
+@import "layout/navbar";
+@import "layout/header";
+@import "layout/sidebar";
+@import "layout/footer";
+
+//Components
+@import "components/buttons";
+@import "components/list";
+@import "components/checkbox";
+
+//Vendor
+body {
+  font-size: 16px;
+}
