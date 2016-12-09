@@ -17,97 +17,79 @@ function readTextFile(file)
                 var allText = rawFile.responseText;
                 var data = allText.split('\r\n');
 
-                var province = [];
-
-                // function produceJSON(data) {
-                //     var arr = [];
-                //
-                //     for (var i = 0, l = data.length; i < l; i++) {
-                //         var obj = [];
-                //         var split = data[i].split(" / ");
-                //
-                //         if(!obj.includes(split[0].split(" ")[0])){
-                //             obj = split[0].split(" ")[0];
-                //         }
-                //
-                //         arr.push(obj);
-                //     }
-                //     return arr;
-                // }
-                //
-                // var dataX = produceJSON(data);
-                // console.log(dataX);
-
-                // var seen = {};
-                // dataX = dataX.filter(function(entry) {
-                //     var previous;
-                //
-                //     // Have we seen this label before?
-                //     if (seen.hasOwnProperty(entry.label)) {
-                //         // Yes, grab it and add this data to it
-                //         previous = seen[entry.label];
-                //         previous.data.push(entry.data);
-                //         previous.distrito.push(entry.distrito);
-                //
-                //         // Don't keep this entry, we've merged it into the previous one
-                //         return false;
-                //     }
-                //
-                //     // entry.data probably isn't an array; make it one for consistency
-                //     if (!Array.isArray(entry.data)) {
-                //         entry.data = [entry.data];
-                //     }
-                //
-                //     if (!Array.isArray(entry.distrito)) {
-                //         entry.distrito = [entry.distrito];
-                //     }
-                //
-                //     // Remember that we've seen it
-                //     seen[entry.label] = entry;
-                //
-                //     // Keep this one, we'll merge any others that match into it
-                //     return true;
-                // });
-                // console.log(dataX);
+                var objeto = {
+                    "ciudades": []
+                };
 
                 for (var i = 0; i < data.length; i++) {
 
                     var split = data[i].split(" / "),
-                        firstLVL,
-                        secondLVL,
-                        thirdLVL;
+                        firstLVL;
 
-                    if( (split.length - 1) < 1){
+                    if( (split.length - 1) < 1) {
                         firstLVL = split[0];
 
-                        province.push([
-                            firstLVL.split(" ")[0],
-                            firstLVL.split(" ")[1],
-                            []
-                        ]);
-                    }
-
-                    if( (split.length - 1) === 1){
-                        secondLVL = split;
-
-                        var unique = secondLVL.filter(function(elem, index, self) {
-                            return index == self.indexOf(elem);
-                        });
-
-                        console.log(unique.length);
-
-                        // for (var i = 0; i < unique.length; i += 1) {
-                        //     var p1 = province[i];
-                        //     console.log(province);
-                        //     if (p1[0] === secondLVL[0].split(" ")[0]) {
-                        //         province[i][2].push(secondLVL[i]);
-                        //         province[i][2].push(secondLVL[i+1]);
-                        //     }
-                        // }
+                        objeto.ciudades.push({
+                            "code": firstLVL.split(" ")[0],
+                            "name": firstLVL.split(" ")[1],
+                            "provincias": []
+                        })
                     }
                 }
 
-                console.log(province);
+                for (var ii = 0; ii < data.length; ii++) {
+
+                    var splitt = data[ii].split(" / "),
+                        secondLVL;
+
+                    if( (splitt.length - 1) === 1){
+                        secondLVL = splitt;
+
+                        for (var j = 0; j < objeto.ciudades.length; j++) {
+                            for (var x = 0; x < objeto.ciudades.length; x++) {
+                                if (objeto.ciudades[j].code == secondLVL[x].split(" ")[0]) {
+                                    objeto.ciudades[j].provincias.push({
+                                        "code": secondLVL[1].split(" ")[0],
+                                        "name": secondLVL[1].split(" ")[1],
+                                        "distritos": []
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+
+                for (var iii = 0; iii < data.length; iii++) {
+
+                    var split3 = data[iii].split(" / "),
+                        thirdLVL;
+
+                    if( (split3.length - 1) === 2){
+                        thirdLVL = split3;
+                        console.log(thirdLVL);
+
+                        for (var jj = 0; jj < objeto.ciudades.length; jj++) {
+                            for (var zz = 0; zz < thirdLVL.length; zz++) {
+                                if (objeto.ciudades[jj].code == thirdLVL[zz].split(" ")[0] &&
+                                    objeto.ciudades[jj].provincias[zz].code == thirdLVL[zz+1].split(" ")[0]) {
+                                    if(thirdLVL[zz+2].split(" ")[2] === undefined){
+                                        objeto.ciudades[jj].provincias[zz].distritos.push({
+                                            "code": thirdLVL[zz+2].split(" ")[0],
+                                            "name": thirdLVL[zz+2].split(" ")[1]
+                                        });
+                                    }else{
+                                        objeto.ciudades[jj].provincias[zz].distritos.push({
+                                            "code": thirdLVL[zz+2].split(" ")[0],
+                                            "name": thirdLVL[zz+2].split(" ")[1] + ' ' + thirdLVL[zz+2].split(" ")[2]
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                console.log(objeto);
             }
         }
     }
@@ -115,50 +97,3 @@ function readTextFile(file)
 }
 
 readTextFile("/site/data.txt");
-
-// var data = [
-//         {
-//             label: "Book1",
-//             data: "US edition"
-//         },
-//         {
-//             label: "Book1",
-//             data: "UK edition"
-//         },
-//         {
-//             label: "Book1",
-//             data: "UK edition"
-//         },
-//         {
-//             label: "Book2",
-//             data: "CAN edition"
-//         }
-//     ];
-//
-// var seen = {};
-// data = data.filter(function(entry) {
-//     var previous;
-//
-//     // Have we seen this label before?
-//     if (seen.hasOwnProperty(entry.label)) {
-//         // Yes, grab it and add this data to it
-//         previous = seen[entry.label];
-//         previous.data.push(entry.data);
-//
-//         // Don't keep this entry, we've merged it into the previous one
-//         return false;
-//     }
-//
-//     // entry.data probably isn't an array; make it one for consistency
-//     if (!Array.isArray(entry.data)) {
-//         entry.data = [entry.data];
-//     }
-//
-//     // Remember that we've seen it
-//     seen[entry.label] = entry;
-//
-//     // Keep this one, we'll merge any others that match into it
-//     return true;
-// });
-//
-// console.log(data);
