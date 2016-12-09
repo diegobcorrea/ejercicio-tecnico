@@ -1,0 +1,29 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: $secondary-font-family;
+  font-weight: 700;
+}
+
+.list--horizontal {
+  flex-direction: row;
+}
+
+.list__item {
+  margin: .5rem;
+}
+
+.list__item--horizontal {
+  margin: 0 1rem;
+}
+
+.list__item--vertical {
+  margin: 1rem 0;
+}
+
+.list__item--nested {
+  margin-left: 2rem;
+}
