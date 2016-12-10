@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="dabc">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +7,25 @@
     <title>Ejercicio Técnico</title>
     <!-- Styles section -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css"
+          rel="stylesheet" >
     <link rel="stylesheet" href="https://use.fontawesome.com/415702625e.css" media="all">
     <link rel="stylesheet" href="site/css/styles.css"></link>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100|Lato:400,700,300,100' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 </head>
 <body>
 
-    <div class="test">Test</div>
+    <div class="container" ng-controller="readfileController">
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>{{data[0].name}}</p>
+            </div>
+        </div>
+    </div>
+
     <!-- JS Files -->
+    <script src="/node_modules/angular/angular.js"></script>
     <script src="site/js/site.min.js"></script>
 </body>
 </html>

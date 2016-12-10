@@ -1,8 +1,8 @@
 {
-  "name": "Gulp-Integration",
+  "name": "Ejercicio-Tecnico",
   "private": true,
   "version": "1.0.0",
-  "description": "Start your project with Gulp + BrowserSync + Sass + HTML5",
+  "description": "Ejercicio tecnico para entrevista",
   "main": "gulpfile.js",
   "scripts": {
     "start": "npm install"
@@ -10,6 +10,7 @@
   "author": "Diego Becerra Correa",
   "license": "MIT",
   "devDependencies": {
+    "angular": "^1.6.0",
     "browser-sync": "^2.12.10",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",

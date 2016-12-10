@@ -1,7 +1,4 @@
 /**
- * Created by Gian Carlo on 30/05/2016.
- */
-/**
  * Dependencies
  */
 var browserSync = require('browser-sync'),
