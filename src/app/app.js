@@ -1,14 +1,71 @@
-var app = angular.module('dabc', []);
+var app = angular.module('dabc', [
+    'angularSpinner'
+]);
 
+// Read file
 app.controller( "readfileController", function( $scope, $window, $http) {
+
+    var objeto = {
+        "ciudades": []
+    };
+
+    $scope.isProvincia = true;
+    $scope.showReload = false;
+    $scope.isLoading = true;
+
+    $scope.loadData = function(data) {
+        $scope.data = data;
+        $scope.isLoading = false;
+    };
+
+    $scope.getProvince = function (code) {
+        for (var i = 0; i < objeto.ciudades.length; i++) {
+            if( objeto.ciudades[i].code == code ){
+                $scope.isLoading = true;
+
+                $scope.loadData(objeto.ciudades[i].provincias);
+                $scope.parent_code = objeto.ciudades[i].code;
+                $scope.parent_name = objeto.ciudades[i].name;
+
+                $scope.isProvincia = false;
+                $scope.showReload = true;
+
+            }
+        }
+    };
+
+    $scope.getDistrit = function (code) {
+        for (var i = 0; i < objeto.ciudades.length; i++) {
+            for (var z = 0; z < objeto.ciudades.length; z++) {
+                if (objeto.ciudades[i].provincias[z].code == code) {
+                    if(objeto.ciudades[i].provincias[z].distritos.length > 0) {
+                        $scope.isLoading = true;
+
+                        $scope.loadData(objeto.ciudades[i].provincias[z].distritos);
+                        $scope.parent_code = objeto.ciudades[i].provincias[z].code;
+                        $scope.parent_name = objeto.ciudades[i].provincias[z].name;
+
+                        $scope.showReload = true;
+
+                    }
+                }
+            }
+        }
+    };
+
+    $scope.reloadData = function () {
+        $scope.loadData($scope.reload);
+        $scope.parent_code = '';
+        $scope.parent_name = '';
+
+        $scope.showReload = false;
+        $scope.isProvincia = true;
+    };
+
     $http.get('/site/data.txt')
         .then(function(response) {
             var allText = response.data;
             var data = allText.split('\r\n');
-
-            var objeto = {
-                "ciudades": []
-            };
 
             for (var i = 0; i < data.length; i++) {
 
@@ -76,6 +133,9 @@ app.controller( "readfileController", function( $scope, $window, $http) {
                     }
                 }
             }
-            $scope.data = objeto.ciudades;
+
+            $scope.reload = objeto.ciudades;
+            $scope.loadData(objeto.ciudades);
         });
+
 })

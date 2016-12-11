@@ -11,6 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "angular": "^1.6.0",
+    "bootstrap": "^3.3.7",
     "browser-sync": "^2.12.10",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",

@@ -25,4 +25,16 @@
 //Vendor
 body {
   font-size: 16px;
+  padding-top: 80px;
+}
+
+.spinner {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  padding: 40px 0;
+  p {
+    margin-top: 20px;
+  }
 }

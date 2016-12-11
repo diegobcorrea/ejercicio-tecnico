@@ -8,24 +8,102 @@
     <!-- Styles section -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css"
-          rel="stylesheet" >
+          rel="stylesheet">
+    <link href="site/css/paper.css"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/415702625e.css" media="all">
     <link rel="stylesheet" href="site/css/styles.css"></link>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100|Lato:400,700,300,100' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand"
+                   href="/" >Departamento
+                </a>
+            </div>
+
+
+        </div>
+    </nav>
+
     <div class="container" ng-controller="readfileController">
 
-        <div class="row">
-            <div class="col-md-6">
-                <p>{{data[0].name}}</p>
+        <div class="row" >
+            <div class="col-md-12">
+                <button class="btn btn-link"
+                    ng-show="showReload"
+                    ng-click="reloadData()">Volver
+                </button>
             </div>
+
+            <div class="col-md-12">
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Código Padre</th>
+                        <th>Descripción Padre</th>
+                    </tr>
+
+                    <tr ng-repeat="city in data">
+                        <td ng-click="isProvincia ? getProvince(city.code) : getDistrit(city.code)">{{ city.code }}</td>
+                        <td ng-click="isProvincia ? getProvince(city.code) : getDistrit(city.code)">{{ city.name }}</td>
+                        <td>{{ parent_code }}</td>
+                        <td>{{ parent_name }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+
+        <div class="spinner"
+             ng-show="isLoading">
+            <span us-spinner="{radius:8, width:5, length: 3, lines:9}" ></span>
+
+            <p>Loading...</p>
         </div>
     </div>
 
+    <!--<div class="container" ng-controller="readfileController">-->
+
+        <!--<div class="row" >-->
+            <!--<div class="col-md-12">-->
+
+                <!--<table class="table table-bordered" >-->
+
+                    <!--<tr>-->
+                        <!--<th>Código</th>-->
+                        <!--<th>Nombre</th>-->
+                        <!--<th>Código Padre</th>-->
+                        <!--<th>Descripción Padre</th>-->
+                    <!--</tr>-->
+
+                    <!--<tbody ng-repeat="city in data">-->
+                    <!--<tr ng-repeat="provincia in city.provincias">-->
+                        <!--<td>{{ provincia.code }}</td>-->
+                        <!--<td>{{ provincia.name }}</td>-->
+                        <!--<td>{{ city.code }}</td>-->
+                        <!--<td>{{ city.name }}</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+
+                <!--</table>-->
+
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+
     <!-- JS Files -->
     <script src="/node_modules/angular/angular.js"></script>
+    <script src="/node_modules/spin.js/spin.js"></script>
+    <script src="/node_modules/angular-spinner/angular-spinner.js"></script>
     <script src="site/js/site.min.js"></script>
 </body>
 </html>
